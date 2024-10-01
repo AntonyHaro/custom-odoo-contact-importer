@@ -19,8 +19,8 @@ def import_csv_contacts(file_name):
             reader = csv.reader(file)
             header = next(reader)
             
-            # collect the csv headers and set the header indexes in column_index object
-            column_indices = {
+            # collect the csv headers and set the header indexes in contact_indexes object
+            contact_indexes = {
                 "name": header.index("name"),
                 "email": header.index("email"),
             }
@@ -33,8 +33,9 @@ def import_csv_contacts(file_name):
             for row_index, row in enumerate(reader, start=1):    
                 
                 contact = {
-                    "name": row[column_indices["name"]].strip(),
-                    "email": row[column_indices["email"]].strip(),
+                    "name": row[contact_indexes["name"]].strip(),
+                    "email": row[contact_indexes["email"]].strip(),
+                    "x_agetest": "65"
                 }
 
                 if not contact["name"] or not contact["email"]:

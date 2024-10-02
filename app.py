@@ -29,8 +29,10 @@ def import_csv_contacts(file_name):
 
                 #custom fields "x_customfieldname"
                 "x_linkedin": header.index("x_linkedin"),
-                "x_redes_sociais_user": header.index("x_redes_sociais_user"),
+                "x_redes_sociais_contato": header.index("x_redes_sociais_contato"),
                 "x_redes_sociais_empresa": header.index("x_redes_sociais_empresa"),
+                "x_setor_contato": header.index("x_setor_contato"),
+                "x_setor_empresa": header.index("x_setor_empresa")
             }
 
             contacts = []
@@ -46,8 +48,10 @@ def import_csv_contacts(file_name):
                     "function": row[contact_indexes["function"]].strip(),
                     "company_name": row[contact_indexes["company_name"]].strip(),
                     "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
-                    "x_redes_sociais_user": row[contact_indexes["x_redes_sociais_user"]].strip(),
-                    "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip()
+                    "x_redes_sociais_contato": row[contact_indexes["x_redes_sociais_contato"]].strip(),
+                    "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip(),
+                    "x_setor_contato": row[contact_indexes["x_setor_contato"]].strip(),
+                    "x_setor_empresa": row[contact_indexes["x_setor_empresa"]].strip()
                 }
 
                 if not contact["name"] or not contact["email"]:
@@ -111,6 +115,7 @@ def main():
         
         if contacts:
             print(f"\nTotal de contatos para serem carregados: {len(contacts)}\n")
+
             # create contacts from the array of contacts
             create_contacts(odoo_url, odoo_db, uid, odoo_password, contacts)
     

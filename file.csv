@@ -1,2 +1,2 @@
-name,email,function,company_name,x_linkedin,x_redes_sociais_user,x_redes_sociais_empresa
-testezera, example@example.com, programador,JoaoHighTech,linkedinjoazinho,@joazinhotech,@joaohightech
+name,email,function,company_name,x_linkedin,x_redes_sociais_contato,x_redes_sociais_empresa,x_setor_contato,x_setor_empresa
+lanorildo, example@example.com, programador,JoaoHighTech,linkedinjoazinho,@joazinhotech,@joaohightech,Tecnologia,Tecnologia Automotiva

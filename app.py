@@ -26,13 +26,17 @@ def import_csv_contacts(file_name):
                 "email": header.index("email"),
                 "function": header.index("function"),
                 "company_name": header.index("company_name"),
+                "city": header.index("city"),
 
                 #custom fields "x_customfieldname"
                 "x_linkedin": header.index("x_linkedin"),
                 "x_redes_sociais_contato": header.index("x_redes_sociais_contato"),
                 "x_redes_sociais_empresa": header.index("x_redes_sociais_empresa"),
                 "x_setor_contato": header.index("x_setor_contato"),
-                "x_setor_empresa": header.index("x_setor_empresa")
+                "x_setor_empresa": header.index("x_setor_empresa"),
+                "x_url_empresa":  header.index("x_url_empresa"),
+                "x_telefone_sede":  header.index("x_telefone_sede"),
+                "x_tamanho_empresa":  header.index("x_tamanho_empresa")
             }
 
             contacts = []
@@ -41,17 +45,23 @@ def import_csv_contacts(file_name):
             # check the valid records in the csv file
             print("\nRegistros válidos do arquivo:")
             for row_index, row in enumerate(reader, start=1):    
-                
+
+                # create the contact object based on the contact_indexes info 
                 contact = {
                     "name": row[contact_indexes["name"]].strip(),
                     "email": row[contact_indexes["email"]].strip(),
                     "function": row[contact_indexes["function"]].strip(),
                     "company_name": row[contact_indexes["company_name"]].strip(),
+                    "city": row[contact_indexes["city"]].strip(),
+
                     "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
                     "x_redes_sociais_contato": row[contact_indexes["x_redes_sociais_contato"]].strip(),
                     "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip(),
                     "x_setor_contato": row[contact_indexes["x_setor_contato"]].strip(),
-                    "x_setor_empresa": row[contact_indexes["x_setor_empresa"]].strip()
+                    "x_setor_empresa": row[contact_indexes["x_setor_empresa"]].strip(),
+                    "x_url_empresa": row[contact_indexes["x_url_empresa"]].strip(),
+                    "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
+                    "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip()
                 }
 
                 if not contact["name"] or not contact["email"]:
@@ -96,7 +106,7 @@ def create_contacts(url, db, uid, password, contacts):
 
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
             print(f"Contato criado com o ID: {contact_id}")
-        
+
     except Exception as e:
         print(f"Erro ao criar contatos: {e}")
 

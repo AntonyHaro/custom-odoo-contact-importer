@@ -31,7 +31,7 @@ def import_csv_contacts(file_name):
                 "state_id":  header.index("state_id"), 
                 "street": header.index("street"),
 
-                #custom fields "x_customfieldname"
+                #custom fields "x_custom_field_name"
                 "x_linkedin": header.index("x_linkedin"),
                 "x_redes_sociais_contato": header.index("x_redes_sociais_contato"),
                 "x_redes_sociais_empresa": header.index("x_redes_sociais_empresa"),
@@ -67,7 +67,6 @@ def import_csv_contacts(file_name):
                     "x_url_empresa": row[contact_indexes["x_url_empresa"]].strip(),
                     "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
                     "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip(),
-                    "x_teste": "teste do res.partner model"
                 }
 
                 if not contact["name"] or not contact["email"]:
@@ -116,7 +115,7 @@ def create_contacts(url, db, uid, password, contacts):
 
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
             print(f"Contato criado com o ID: {contact_id}")
-            
+
     except Exception as e:
         print(f"Erro ao criar contatos: {e}")
 

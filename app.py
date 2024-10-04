@@ -59,7 +59,6 @@ def import_csv_contacts(file_name):
                     "country_id": row[contact_indexes["country_id"]].strip(),
                     "state_id": row[contact_indexes["state_id"]].strip(),
                     "street": row[contact_indexes["street"]].strip(),
-
                     "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
                     "x_redes_sociais_contato": row[contact_indexes["x_redes_sociais_contato"]].strip(),
                     "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip(),
@@ -67,7 +66,8 @@ def import_csv_contacts(file_name):
                     "x_setor_empresa": row[contact_indexes["x_setor_empresa"]].strip(),
                     "x_url_empresa": row[contact_indexes["x_url_empresa"]].strip(),
                     "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
-                    "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip()
+                    "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip(),
+                    "x_teste": "teste do res.partner model"
                 }
 
                 if not contact["name"] or not contact["email"]:
@@ -106,28 +106,17 @@ def create_contacts(url, db, uid, password, contacts):
         models = xmlrpc.client.ServerProxy("{}/xmlrpc/2/object".format(url))
 
         for contact in contacts:
-            if not contact.get("name") or not contact.get("email"):
-                print(f"Contato inválido, faltando nome ou email: {contact}")
-                continue
-
             country_id = get_country_id(models, db, uid, password, contact["country_id"])
             if country_id:
                 contact["country_id"] = country_id
-            else:
-                print(f"País '{contact['country_id']}' não encontrado. O contato não será criado.")
-                continue
 
             state_id = get_state_id(models, db, uid, password, country_id, contact["state_id"])
             if state_id:
                 contact["state_id"] = state_id
-            else:
-                print(f"Estado '{contact['state_id']}' não encontrado para o país '{contact['country_id']}'. O contato não será criado.")
-                continue
-
 
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
             print(f"Contato criado com o ID: {contact_id}")
-
+            
     except Exception as e:
         print(f"Erro ao criar contatos: {e}")
 

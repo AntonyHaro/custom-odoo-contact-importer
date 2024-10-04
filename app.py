@@ -40,6 +40,8 @@ def import_csv_contacts(file_name):
                 "x_url_empresa":  header.index("x_url_empresa"),
                 "x_telefone_sede":  header.index("x_telefone_sede"),
                 "x_tamanho_empresa":  header.index("x_tamanho_empresa"),
+                "x_local_empresa": header.index("x_local_empresa"),
+                "x_local": header.index("x_local"),
             }
 
             contacts = []
@@ -67,6 +69,27 @@ def import_csv_contacts(file_name):
                     "x_url_empresa": row[contact_indexes["x_url_empresa"]].strip(),
                     "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
                     "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip(),
+                    "x_local_empresa": row[contact_indexes["x_local_empresa"]].strip(),
+
+
+                    # single field with general info - contact (type text)
+                    "x_info_contato": f"""
+                        localização: {row[contact_indexes["x_local"]].strip()}
+                        linkedin: {row[contact_indexes["x_linkedin"]].strip()}
+                        redes sociais: {row[contact_indexes["x_redes_sociais_contato"]].strip()}
+                        setor: {row[contact_indexes["x_setor_contato"]].strip()}
+                        cargo: {row[contact_indexes["function"]].strip()}
+                    """,
+
+                    # single field with general info - company (type text)
+                    "x_info_empresa": f"""
+                        nome: {row[contact_indexes["company_name"]].strip()}
+                        localização: {row[contact_indexes["x_local_empresa"]].strip()}
+                        redes sociais: {row[contact_indexes["x_redes_sociais_empresa"]].strip()}
+                        setor: {row[contact_indexes["x_setor_empresa"]].strip()}
+                        tamanho: {row[contact_indexes["x_tamanho_empresa"]].strip()}
+                        url: {row[contact_indexes["x_url_empresa"]].strip()}
+                    """
                 }
 
                 if not contact["name"] or not contact["email"]:

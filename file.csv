@@ -1,2 +1,2 @@
-name,email,function,company_name,x_linkedin,x_redes_sociais_contato,x_redes_sociais_empresa,x_setor_contato,x_setor_empresa,x_url_empresa,x_telefone_sede,x_tamanho_empresa,city,country_id,state_id,street
-test123, example@example.com, programador,JoaoHighTech,linkedinjoazinho,@joazinhotech,@joaohightech,Tecnologia,Tecnologia Automotiva,fdkfndkfnd.com,11898845475,3000-5001,cidade exemplo,Brazil,São Paulo,rua feliz
+name,email,function,company_name,x_linkedin,x_redes_sociais_contato,x_redes_sociais_empresa,x_setor_contato,x_setor_empresa,x_url_empresa,x_telefone_sede,x_tamanho_empresa,city,country_id,state_id,street,x_local_empresa,x_local
+namefake, example@example.com, programador,truta,linkedinjoazinho,@joazinhotech,@joaohightech,Tecnologia,Tecnologia Automotiva,fdkfndkfnd.com,11898845475,3000-5001,cidade exemplo,Brazil,São Paulo,rua feliz,Seattle - EUA,local do cara

@@ -53,6 +53,7 @@ def import_csv_contacts(file_name):
 
                 # create the contact object based on the contact_indexes info 
                 contact = {
+                    # default
                     "name": row[contact_indexes["name"]].strip(),
                     "email": row[contact_indexes["email"]].strip(),
                     "function": row[contact_indexes["function"]].strip(),
@@ -61,6 +62,8 @@ def import_csv_contacts(file_name):
                     "country_id": row[contact_indexes["country_id"]].strip(),
                     "state_id": row[contact_indexes["state_id"]].strip(),
                     "street": row[contact_indexes["street"]].strip(),
+                    
+                    # custom
                     "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
                     "x_redes_sociais_contato": row[contact_indexes["x_redes_sociais_contato"]].strip(),
                     "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip(),
@@ -70,7 +73,6 @@ def import_csv_contacts(file_name):
                     "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
                     "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip(),
                     "x_local_empresa": row[contact_indexes["x_local_empresa"]].strip(),
-
 
                     # single field with general info - contact (type text)
                     "x_info_contato": f"""
@@ -136,6 +138,7 @@ def create_contacts(url, db, uid, password, contacts):
             if state_id:
                 contact["state_id"] = state_id
 
+            # create the contact using the res.partner model and print the contact_id
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
             print(f"Contato criado com o ID: {contact_id}")
 

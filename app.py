@@ -16,77 +16,51 @@ def import_csv_contacts(file_name):
             return
         
         with open(file_name, mode='r', newline='', encoding='utf-8') as file:
-            reader = csv.reader(file)
-            header = next(reader)
-            
-            # collect the csv headers and set the header indexes in contact_indexes object
-            contact_indexes = {
-                #defualt res.partner fields
-                "name": header.index("name"),
-                "email": header.index("email"),
-                "function": header.index("function"),
-                "company_name": header.index("company_name"),
-                "city": header.index("city"),
-                "country_id":  header.index("country_id"),
-                "state_id":  header.index("state_id"), 
-                "street": header.index("street"),
-
-                #custom contact fields "x_custom_field_name"
-                "x_linkedin": header.index("x_linkedin"),
-                "x_redes_sociais": header.index("x_redes_sociais"),
-                "redes_sociais_empresa": header.index("redes_sociais_empresa"),
-                "x_setor": header.index("x_setor"),
-                
-                # contact's company info
-                "setor_empresa": header.index("setor_empresa"),
-                "url_empresa":  header.index("url_empresa"),
-                "telefone_sede":  header.index("telefone_sede"),
-                "tamanho_empresa":  header.index("tamanho_empresa"),
-                "local_empresa": header.index("local_empresa"),
-            }
+            reader = csv.DictReader(file)
 
             contacts = []
             invalid_contacts = []
-            
-            # check the valid records in the csv file
+
             print("\nRegistros válidos do arquivo:")
-            for row_index, row in enumerate(reader, start=1):    
 
-                # create the contact object based on the contact_indexes info 
+            # get the contact info from the csv file
+            for row_index, row in enumerate(reader, start=1):
                 contact = {
-                    "name": row[contact_indexes["name"]].strip(),
-                    "email": row[contact_indexes["email"]].strip(),
-                    "function": row[contact_indexes["function"]].strip(),
-                    "company_name": row[contact_indexes["company_name"]].strip(),
-                    "city": row[contact_indexes["city"]].strip(),
-                    "country_id": row[contact_indexes["country_id"]].strip(),
-                    "state_id": row[contact_indexes["state_id"]].strip(),
-                    "street": row[contact_indexes["street"]].strip(),
+                    # default res.partner fields
+                    "name": row.get("name", "").strip(),
+                    "email": row.get("email", "").strip(),
+                    "function": row.get("function", "").strip(),
+                    "company_name": row.get("company_name", "").strip(),
+                    "city": row.get("city", "").strip(),
+                    "country_id": row.get("country_id", "").strip(),
+                    "state_id": row.get("state_id", "").strip(),
+                    "street": row.get("street", "").strip(),
                     
-                    "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
-                    "x_redes_sociais": row[contact_indexes["x_redes_sociais"]].strip(),
-                    "x_setor": row[contact_indexes["x_setor"]].strip(),
-
-                    # single field with general company info (type text)
+                    # custom fields
+                    "x_linkedin": row.get("x_linkedin", "").strip(),
+                    "x_redes_sociais": row.get("x_redes_sociais", "").strip(),
+                    "x_setor": row.get("x_setor", "").strip(),
+                    
+                    # custom text field for the company info
                     "x_info_empresa": f"""
-                        Nome: {row[contact_indexes["company_name"]].strip()}
-                        Localização: {row[contact_indexes["local_empresa"]].strip()}
-                        Telefone da sede: {row[contact_indexes["telefone_sede"]].strip()}
-                        Redes Sociais: {row[contact_indexes["redes_sociais_empresa"]].strip()}
-                        Setor: {row[contact_indexes["setor_empresa"]].strip()}
-                        Tamanho: {row[contact_indexes["tamanho_empresa"]].strip()}
-                        URL: {row[contact_indexes["url_empresa"]].strip()}
+                        Nome: {row.get("company_name", "").strip()}
+                        Localização: {row.get("local_empresa", "").strip()}
+                        Telefone da sede: {row.get("telefone_sede", "").strip()}
+                        Redes Sociais: {row.get("redes_sociais_empresa", "").strip()}
+                        Setor: {row.get("setor_empresa", "").strip()}
+                        Tamanho: {row.get("tamanho_empresa", "").strip()}
+                        URL: {row.get("url_empresa", "").strip()}
                     """
                 }
-
+                
                 if not contact["name"] or not contact["email"]:
-                    invalid_contacts.append(f"Registro {row_index}")
+                    invalid_contacts.append(f"Registro {row_index}, {contact['name']}, {contact['email']}")
                     continue
-
+                
                 print(f"Registro {row_index}, Nome: {contact['name']}, Email: {contact['email']}")
                 contacts.append(contact)
                 
-            if len(invalid_contacts) > 0:
+            if invalid_contacts:
                 print("\nRegistros inválidos:")
                 for i in invalid_contacts:
                     print(i)

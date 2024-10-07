@@ -31,17 +31,18 @@ def import_csv_contacts(file_name):
                 "state_id":  header.index("state_id"), 
                 "street": header.index("street"),
 
-                #custom fields "x_custom_field_name"
+                #custom contact fields "x_custom_field_name"
                 "x_linkedin": header.index("x_linkedin"),
-                "x_redes_sociais_contato": header.index("x_redes_sociais_contato"),
-                "x_redes_sociais_empresa": header.index("x_redes_sociais_empresa"),
-                "x_setor_contato": header.index("x_setor_contato"),
-                "x_setor_empresa": header.index("x_setor_empresa"),
-                "x_url_empresa":  header.index("x_url_empresa"),
-                "x_telefone_sede":  header.index("x_telefone_sede"),
-                "x_tamanho_empresa":  header.index("x_tamanho_empresa"),
-                "x_local_empresa": header.index("x_local_empresa"),
-                "x_local": header.index("x_local"),
+                "x_redes_sociais": header.index("x_redes_sociais"),
+                "redes_sociais_empresa": header.index("redes_sociais_empresa"),
+                "x_setor": header.index("x_setor"),
+                
+                # contact's company info
+                "setor_empresa": header.index("setor_empresa"),
+                "url_empresa":  header.index("url_empresa"),
+                "telefone_sede":  header.index("telefone_sede"),
+                "tamanho_empresa":  header.index("tamanho_empresa"),
+                "local_empresa": header.index("local_empresa"),
             }
 
             contacts = []
@@ -53,7 +54,6 @@ def import_csv_contacts(file_name):
 
                 # create the contact object based on the contact_indexes info 
                 contact = {
-                    # default
                     "name": row[contact_indexes["name"]].strip(),
                     "email": row[contact_indexes["email"]].strip(),
                     "function": row[contact_indexes["function"]].strip(),
@@ -63,34 +63,19 @@ def import_csv_contacts(file_name):
                     "state_id": row[contact_indexes["state_id"]].strip(),
                     "street": row[contact_indexes["street"]].strip(),
                     
-                    # custom
                     "x_linkedin": row[contact_indexes["x_linkedin"]].strip(),
-                    "x_redes_sociais_contato": row[contact_indexes["x_redes_sociais_contato"]].strip(),
-                    "x_redes_sociais_empresa": row[contact_indexes["x_redes_sociais_empresa"]].strip(),
-                    "x_setor_contato": row[contact_indexes["x_setor_contato"]].strip(),
-                    "x_setor_empresa": row[contact_indexes["x_setor_empresa"]].strip(),
-                    "x_url_empresa": row[contact_indexes["x_url_empresa"]].strip(),
-                    "x_telefone_sede": row[contact_indexes["x_telefone_sede"]].strip(),
-                    "x_tamanho_empresa": row[contact_indexes["x_tamanho_empresa"]].strip(),
-                    "x_local_empresa": row[contact_indexes["x_local_empresa"]].strip(),
+                    "x_redes_sociais": row[contact_indexes["x_redes_sociais"]].strip(),
+                    "x_setor": row[contact_indexes["x_setor"]].strip(),
 
-                    # single field with general info - contact (type text)
-                    "x_info_contato": f"""
-                        localização: {row[contact_indexes["x_local"]].strip()}
-                        linkedin: {row[contact_indexes["x_linkedin"]].strip()}
-                        redes sociais: {row[contact_indexes["x_redes_sociais_contato"]].strip()}
-                        setor: {row[contact_indexes["x_setor_contato"]].strip()}
-                        cargo: {row[contact_indexes["function"]].strip()}
-                    """,
-
-                    # single field with general info - company (type text)
+                    # single field with general company info (type text)
                     "x_info_empresa": f"""
-                        nome: {row[contact_indexes["company_name"]].strip()}
-                        localização: {row[contact_indexes["x_local_empresa"]].strip()}
-                        redes sociais: {row[contact_indexes["x_redes_sociais_empresa"]].strip()}
-                        setor: {row[contact_indexes["x_setor_empresa"]].strip()}
-                        tamanho: {row[contact_indexes["x_tamanho_empresa"]].strip()}
-                        url: {row[contact_indexes["x_url_empresa"]].strip()}
+                        Nome: {row[contact_indexes["company_name"]].strip()}
+                        Localização: {row[contact_indexes["local_empresa"]].strip()}
+                        Telefone da sede: {row[contact_indexes["telefone_sede"]].strip()}
+                        Redes Sociais: {row[contact_indexes["redes_sociais_empresa"]].strip()}
+                        Setor: {row[contact_indexes["setor_empresa"]].strip()}
+                        Tamanho: {row[contact_indexes["tamanho_empresa"]].strip()}
+                        URL: {row[contact_indexes["url_empresa"]].strip()}
                     """
                 }
 

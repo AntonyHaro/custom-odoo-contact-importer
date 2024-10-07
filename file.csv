@@ -1,2 +1,2 @@
-name,email,function,company_name,x_linkedin,x_redes_sociais_contato,x_redes_sociais_empresa,x_setor_contato,x_setor_empresa,x_url_empresa,x_telefone_sede,x_tamanho_empresa,city,country_id,state_id,street,x_local_empresa,x_local
-namefake, example@example.com, programador,truta,linkedinjoazinho,@joazinhotech,@joaohightech,Tecnologia,Tecnologia Automotiva,fdkfndkfnd.com,11898845475,3000-5001,cidade exemplo,Brazil,São Paulo,rua feliz,Seattle - EUA,local do cara
+name,email,function,company_name,city,country_id,state_id,street,x_linkedin,x_redes_sociais,x_setor,redes_sociais_empresa,setor_empresa,url_empresa,telefone_sede,tamanho_empresa,local_empresa
+name,email@example.com,Gerente,Empresa Exemplo,Cidade Exemplo,Brazil,São Paulo,Rua Exemplo 123,@linkedinexample,@example_example,Tecnologia,@company,Tecnologia,companyurl.example,12345678910,1000-2001,Alameda Exemplo 123

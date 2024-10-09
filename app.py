@@ -125,9 +125,11 @@ def create_contacts(url, db, uid, password, contacts):
             
             if country_id:
                 contact["country_id"] = country_id
+                print(contact["country_id"])
 
             if state_id:
                 contact["state_id"] = state_id
+                print(contact["state_id"])
                 
             # create the contact using the res.partner model and print the contact_id
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])

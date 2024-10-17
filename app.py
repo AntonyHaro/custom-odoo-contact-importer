@@ -137,31 +137,52 @@ def contact_exists_odoo(existing_contacts, contact):
             return True
     return False
 
-# create the contacts based on the contacts array
-def create_contacts(url, db, uid, password, contacts):
-    try: 
-        models = xmlrpc.client.ServerProxy("{}/xmlrpc/2/object".format(url))
-        existing_contacts = get_existing_contacts(models, db, uid, password) 
+# cache dictionaries for the country and state
+country_cache = {}
+state_cache = {}
 
+# check if the country_id already exists or search and save in the cache
+def get_country_id_cached(models, db, uid, password, country_name):
+    if country_name in country_cache:
+        return country_cache[country_name]
+    
+    country_id = get_country_id(models, db, uid, password, country_name)
+    if country_id:
+        country_cache[country_name] = country_id
+    
+    return country_id
+
+# check if the state_id already exists or search and save in the cache
+def get_state_id_cached(models, db, uid, password, country_id, state_name):
+    # creates a unique key using the country and state, making sure states with the same name in different countries are treated separately
+    state_cache_key = (country_id, state_name)
+    
+    if state_cache_key in state_cache:
+        return state_cache[state_cache_key]
+    
+    state_id = get_state_id(models, db, uid, password, country_id, state_name)
+    if state_id:
+        state_cache[state_cache_key] = state_id
+    
+    return state_id
+
+# create the contacts using the cache feature
+def create_contacts(url, db, uid, password, contacts):
+    try:
+        models = xmlrpc.client.ServerProxy("{}/xmlrpc/2/object".format(url))
+        existing_contacts = get_existing_contacts(models, db, uid, password)
+        
         for contact in contacts:
             if contact_exists_odoo(existing_contacts, contact):
                 print(f"{contact['name']} ou o email {contact['email']} já existe em seu banco de dados.")
                 continue
             
-            country_id = get_country_id(models, db, uid, password, contact["country_id"])
-            state_id = get_state_id(models, db, uid, password, country_id, contact["state_id"])
+            country_id = get_country_id_cached(models, db, uid, password, contact["country_id"])
+            state_id = get_state_id_cached(models, db, uid, password, country_id, contact["state_id"])
             
-            # both variables are empty strings in case the ID is not available or an error occurs
-            contact["state_id"] = ""
-            contact["country_id"] = ""
+            contact["state_id"] = state_id or ""
+            contact["country_id"] = country_id or ""
             
-            if country_id:
-                contact["country_id"] = country_id
-
-            if state_id:
-                contact["state_id"] = state_id
-                
-            # create the contact using the res.partner model and print the contact_id
             contact_id = models.execute_kw(db, uid, password, "res.partner", "create", [contact])
             print(f"{contact['name']} criado com o ID: {contact_id}")
 
@@ -186,13 +207,10 @@ def main():
 
             # create contacts from the array of contacts
             create_contacts(odoo_url, odoo_db, uid, odoo_password, contacts)
-    
-# if __name__ == "__main__":
-#     main()
 
 if __name__ == "__main__":
-    start_time = time.time()  # Registra o tempo antes de chamar main
+    start_time = time.time()  # register the time
     main()
-    end_time = time.time()  # Registra o tempo após a execução de main
-    elapsed_time = end_time - start_time  # Calcula o tempo decorrido
-    print(f"Tempo de execução: {elapsed_time:.2f} segundos")  # Exibe o tempo decorrido
+    end_time = time.time()  
+    elapsed_time = end_time - start_time  
+    print(f"Tempo de execução: {elapsed_time:.2f} segundos")  # print the execution time of the main()

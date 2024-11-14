@@ -30,10 +30,7 @@ def import_csv_contacts(file_name):
 
             # get the contact info from the csv file
             for row_index, row in enumerate(reader, start=1):
-                # contact_name = (row.get("name") or "").strip()
-                # contact_email = (row.get("email") or "").strip()
-                
-                contact_name = (row.get("Nome") or "").strip()
+                contact_name = (row.get("Nome completo") or "").strip()
                 contact_email = (row.get("E-mail") or "").strip()
 
                 # check if the name or email is alredy in the sets
@@ -43,34 +40,6 @@ def import_csv_contacts(file_name):
                 # add the name and email to the sets variables
                 seen_names.add(contact_name)
                 seen_emails.add(contact_email)
-
-                # contact = {
-                #     # default res.partner fields
-                #     "name": contact_name,
-                #     "email": contact_email,
-                #     "function": (row.get("function") or "").strip(),
-                #     "company_name": (row.get("company_name") or "").strip(),
-                #     "city": (row.get("city") or "").strip(),
-                #     "country_id": (row.get("country_id") or "").strip(),
-                #     "state_id": (row.get("state_id") or "").strip(),
-                #     "street": (row.get("street") or "").strip(),
-                    
-                #     # custom fields
-                #     "x_linkedin": (row.get("x_linkedin") or "").strip(),
-                #     "x_redes_sociais": (row.get("x_redes_sociais") or "").strip(),
-                #     "x_setor": (row.get("x_setor") or "").strip(),
-                    
-                #     # custom text field for the company info
-                #     "x_info_empresa": f"""
-                #         Nome: {(row.get("company_name") or "").strip()}
-                #         Localização: {(row.get("local_empresa") or "").strip()}
-                #         Telefone da sede: {(row.get("telefone_sede") or "").strip()}
-                #         Redes Sociais: {(row.get("redes_sociais_empresa") or "").strip()}
-                #         Setor: {(row.get("setor_empresa") or "").strip()}
-                #         Tamanho: {(row.get("tamanho_empresa") or "").strip()}
-                #         URL: {(row.get("url_empresa") or "").strip()}
-                #     """
-                # }
                 
                 contact = {
                     # default res.partner fields
@@ -82,9 +51,9 @@ def import_csv_contacts(file_name):
                     "country_id": (row.get("País") or "").strip(),
                     "state_id": (row.get("Estado") or "").strip(),
                     "street": (row.get("Localização") or "").strip(),
+                    "website": (row.get("LinkedIn") or "").strip(),
                     
                     # custom fields
-                    "x_linkedin": (row.get("LinkedIn") or "").strip(),
                     "x_redes_sociais": (row.get("Usuário - redes sociais") or "").strip(),
                     "x_setor": (row.get("Setor") or "").strip(),
                     

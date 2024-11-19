@@ -62,10 +62,10 @@ def import_csv_contacts(file_name):
                         Nome: {(row.get("Nome da empresa") or "").strip()}
                         Localização: {(row.get("Localização da empresa") or "").strip()}
                         Telefone da sede: {(row.get("Telefone da sede") or "").strip()}
-                        Redes Sociais: {(row.get("Empresa - redes sociais") or "").strip()}
                         Setor: {(row.get("Setor da empresa") or "").strip()}
                         Tamanho: {(row.get("Tamanho da empresa") or "").strip()}
                         URL: {(row.get("URL da empresa") or "").strip()}
+                        Redes Sociais: {(row.get("Empresa - redes sociais") or "").strip()}
                     """
                 }
 
@@ -169,7 +169,7 @@ def main():
     uid = authenticate(odoo_url, odoo_db, odoo_username, odoo_password)
     if uid:
         # get the contacts from csv
-        contacts = import_csv_contacts("test.csv")
+        contacts = import_csv_contacts("cargaCSV.csv")
         
         if contacts:
             print(f"\nTotal de contatos para serem carregados: {len(contacts)}\n")

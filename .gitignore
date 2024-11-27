@@ -1,7 +1,5 @@
 .env
 __pycache__
+csv
 secret.csv
 cargaCSV.csv
-
-
-
